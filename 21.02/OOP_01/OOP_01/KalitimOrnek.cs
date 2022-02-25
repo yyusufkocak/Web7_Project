@@ -21,7 +21,7 @@ namespace OOP_01
         {
             public string UrunAdi { get; set; }
             public double Fiyat { get; set; }
-            public double KDVUygula()
+            public virtual double KDVUygula()
             {
                 return Fiyat * 1.18;
             }
@@ -65,12 +65,34 @@ namespace OOP_01
             public string EkmekTuru { get; set; }
             public double Gramaj { get; set; }
 
+            public Ekmek()
+            {
+
+            }
+
             public Ekmek(string eAd, double eFiyat, string eEkmekTuru, double eGramaj)
             {
                 UrunAdi = eAd;
                 Fiyat = eFiyat;
                 EkmekTuru = eEkmekTuru;
                 Gramaj = eGramaj;
+            }
+            public override double KDVUygula()
+            {
+                return Fiyat * 1.01;
+            }
+        }
+        class AltEkmek : Ekmek
+        {
+            public string Alttur { get; set; }
+
+            public AltEkmek(string eAd, double eFiyat, string eEkmekTuru, double eGramaj,string alttur)
+            {
+                UrunAdi = eAd;
+                Fiyat = eFiyat;
+                EkmekTuru = eEkmekTuru;
+                Gramaj = eGramaj;
+                Alttur = alttur;
             }
         }
         class Sepet
@@ -102,7 +124,7 @@ namespace OOP_01
         {
             Tekstil tekstil = new Tekstil("pantolon", 100, "Kot", 42);
             sepet.SepeteEkle(tekstil);
-            dgvSepet.Rows.Add(tekstil.UrunAdi,tekstil.Fiyat,tekstil.KDVUygula());
+            dgvSepet.Rows.Add(tekstil.UrunAdi, tekstil.Fiyat, tekstil.KDVUygula());
             lblToplam.Text = sepet.ToplamTutar().ToString();
 
         }
@@ -111,13 +133,14 @@ namespace OOP_01
         {
             CepTelefonu cepTelefonu1 = new CepTelefonu("TCL PLEX", 9000, "TCL");
             sepet.SepeteEkle(cepTelefonu1);
-            dgvSepet.Rows.Add(cepTelefonu1.UrunAdi,cepTelefonu1.Fiyat,cepTelefonu1.KDVUygula());
+            dgvSepet.Rows.Add(cepTelefonu1.UrunAdi, cepTelefonu1.Fiyat, cepTelefonu1.KDVUygula());
             lblToplam.Text = sepet.ToplamTutar().ToString();
         }
 
         private void btnEkmek_Click(object sender, EventArgs e)
         {
-            Ekmek ekmek = new Ekmek("Uno", 1000, "Kepekli", 330);
+            // Ekmek ekmek = new Ekmek("Uno", 1000, "Kepekli", 330);
+            AltEkmek ekmek = new AltEkmek("Uno", 1000, "Kepekli", 330,"Kepekli");
             sepet.SepeteEkle(ekmek);
             dgvSepet.Rows.Add(ekmek.UrunAdi, ekmek.Fiyat, ekmek.KDVUygula());
             lblToplam.Text = sepet.ToplamTutar().ToString();
